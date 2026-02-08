@@ -76,17 +76,14 @@ class Rofi(Selector):
         if not match:
             None
 
-        # Replace empty entries with empty string to avoid issues with 'None'.
-        target_name = match.group("name").strip()
-        target_folder = (match.group("folder") or "").strip()
-        target_user = (match.group("username") or "").strip()
-
         return next(
             entry
             for entry in entries
-            if entry.name == target_name
-            and entry.folder == target_folder
-            and entry.username == target_user
+
+            # Replace empty entries with empty string to avoid issues with 'None'.
+            if entry.name == match.group("name").strip()
+            and entry.folder == (match.group("folder") or "").strip()
+            and entry.username == (match.group("username") or "").strip()
         )
 
     def select_target(
